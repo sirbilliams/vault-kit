@@ -6,12 +6,11 @@
 # Builds nothing: build the ports first. Game art stays OUTSIDE this repo (goldens contain it).
 #
 # DETERMINISM (measured 2026-10-29, same binary, two identical runs, fuzz 0):
-#  f1: 6 of 57 files differ by <= 25 px (critter idle animation in inventory top views). Use --max-px 50.
+#  f1 (2026-10-30, after the port's fixed autotest clock): two identical runs are bit-identical, fuzz 0 and
+#      max-px 0 (29 files per theme, ~6 s per theme). Strict compare is the default; goldens recaptured then.
 #  f2: STRICT compare works (no --fuzz/--max-px): since the port change, --dev-autotest uses a fixed
 #      16 ms-per-frame UI clock (uiTicks) and a fixed random seed; two identical runs give 0 differing
 #      files of 112. Goldens must be recaptured after any intended visual change.
-#  f1 classic: the run segfaults after 28 files (rc 139), pipboy hits the 300 s timeout (rc 124) after
-#      29 files; both are deterministic and the files written before that are the golden set.
 set -u
 
 # ---- configuration (edit paths here) ---------------------------------------
