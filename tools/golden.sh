@@ -7,13 +7,9 @@
 #
 # DETERMINISM (measured 2026-10-29, same binary, two identical runs, fuzz 0):
 #  f1: 6 of 57 files differ by <= 25 px (critter idle animation in inventory top views). Use --max-px 50.
-#  f2: dualscreen/dualpipboy differ in 75 of 112 files, up to ~24000 px on bottom screens: the save is at
-#      HP 2/32, so the bottom-screen low-HP edge vignette pulses from SDL_GetTicks(); map marker ring and
-#      top-screen idle animation also move. The autotest has no fixed-clock or seed env, and
-#      touch.reduce_motion does NOT pin it (tried). Handled with a tolerance profile that still catches
-#      layout/skin regressions: --fuzz 30% --max-px 2500 (two identical runs pass this).
-#      Proper fix (needs a port change): make SDL_GetTicks-driven UI time come from a frame counter when
-#      --dev-autotest is active.
+#  f2: STRICT compare works (no --fuzz/--max-px): since the port change, --dev-autotest uses a fixed
+#      16 ms-per-frame UI clock (uiTicks) and a fixed random seed; two identical runs give 0 differing
+#      files of 112. Goldens must be recaptured after any intended visual change.
 #  f1 classic: the run segfaults after 28 files (rc 139), pipboy hits the 300 s timeout (rc 124) after
 #      29 files; both are deterministic and the files written before that are the golden set.
 set -u
