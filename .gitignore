@@ -1,0 +1,4 @@
+build*/
+*.png
+*.bmp
+_diff/
